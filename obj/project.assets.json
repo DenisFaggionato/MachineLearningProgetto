@@ -8,19 +8,19 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\denis\\.nuget\\packages\\": {}
+    "C:\\Users\\1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\denis\\Source\\Repos\\MachineLearningProgetto\\MacchinaImparante.csproj",
+      "projectUniqueName": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto\\MacchinaImparante.csproj",
       "projectName": "MacchinaImparante",
-      "projectPath": "C:\\Users\\denis\\Source\\Repos\\MachineLearningProgetto\\MacchinaImparante.csproj",
-      "packagesPath": "C:\\Users\\denis\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\denis\\Source\\Repos\\MachineLearningProgetto\\obj\\",
+      "projectPath": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto\\MacchinaImparante.csproj",
+      "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\denis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

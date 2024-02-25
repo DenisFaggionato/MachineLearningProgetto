@@ -1,9 +1,12 @@
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace MacchinaImparante
 {
     public partial class Form1 : Form
     {
+        private string imagePath;
+
         public Form1()
         {
             InitializeComponent();
@@ -13,7 +16,6 @@ namespace MacchinaImparante
 
         private void Immagine_DragDrop(object sender, DragEventArgs e)
         {
-
             var data = e.Data.GetData(DataFormats.FileDrop);
             if (data != null)
             {
@@ -21,11 +23,12 @@ namespace MacchinaImparante
 
                 if (fileNames.Length > 0)
                 {
-                    Immagine.Image = Image.FromFile(fileNames[0]);
-
+                    imagePath = fileNames[0];
+                    Immagine.Image = Image.FromFile(imagePath);
                 }
             }
 
+            Console.WriteLine(imagePath);
         }
 
         private void Immagine_DragEnter(object sender, DragEventArgs e)
@@ -33,42 +36,48 @@ namespace MacchinaImparante
             e.Effect = DragDropEffects.Copy;
         }
 
-        private void Immagine_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void Invia_Click_1(object sender, EventArgs e)
         {
-            string pythonScriptPath = "path_al_tuo_script_python.py";
-
-            // Eseguire lo script Python utilizzando subprocess
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = "python";
-            start.Arguments = $"{pythonScriptPath} arg1 arg2";  // Passa gli argomenti del tuo script Python
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            start.CreateNoWindow = true;
-
-            using (Process process = Process.Start(start))
+            if (!string.IsNullOrEmpty(imagePath))
             {
-                using (StreamReader reader = process.StandardOutput)
+                string pythonScriptPath = "ml.py";
+
+                // Esegui lo script Python utilizzando subprocess
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = "python";
+                start.Arguments = $"{pythonScriptPath} \"{imagePath}\"";
+                start.UseShellExecute = false;
+                start.RedirectStandardOutput = true;
+                start.CreateNoWindow = true;
+
+                using (Process process = Process.Start(start))
                 {
-                    string result = reader.ReadToEnd();
-                    // Manipola il risultato come necessario
-                    Console.WriteLine(result);
+                    using (StreamReader reader = process.StandardOutput)
+                    {
+                        string result = reader.ReadToEnd();
+                        Console.WriteLine(result);
+
+                        List<string> listaCapiVestiario = result.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                        AggiungiRisultatiAlTableLayoutPanel(listaCapiVestiario, tableLayoutPanel2);
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("Nessuna immagine selezionata.");
+            }
+        }
+
+        private void AggiungiRisultatiAlTableLayoutPanel(List<string> listaCapiVestiario, TableLayoutPanel t)
+        {
+
+            for (int i = 0; i < listaCapiVestiario.Count; i++)
+            {
+                Label label = new Label();
+                label.Text = listaCapiVestiario[i];
+                label.Dock = DockStyle.Fill;
+
+                t.Controls.Add(label, 0, i);
             }
         }
     }

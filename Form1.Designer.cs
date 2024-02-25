@@ -53,7 +53,6 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel2.Size = new Size(219, 743);
             tableLayoutPanel2.TabIndex = 2;
-            tableLayoutPanel2.Paint += tableLayoutPanel2_Paint;
             // 
             // Invia
             // 
@@ -97,7 +96,6 @@
             Immagine.SizeMode = PictureBoxSizeMode.StretchImage;
             Immagine.TabIndex = 1;
             Immagine.TabStop = false;
-            Immagine.Click += Immagine_Click;
             Immagine.DragDrop += Immagine_DragDrop;
             Immagine.DragEnter += Immagine_DragEnter;
             // 
