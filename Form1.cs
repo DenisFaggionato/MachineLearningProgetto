@@ -40,7 +40,8 @@ namespace MacchinaImparante
         {
             if (!string.IsNullOrEmpty(imagePath))
             {
-                string pythonScriptPath = "ml.py";
+                Console.WriteLine(imagePath);
+                string pythonScriptPath = "C:\\Users\\1\\source\\repos\\MachineLearningProgetto\\ml.py";
 
                 // Esegui lo script Python utilizzando subprocess
                 ProcessStartInfo start = new ProcessStartInfo();
@@ -48,17 +49,31 @@ namespace MacchinaImparante
                 start.Arguments = $"{pythonScriptPath} \"{imagePath}\"";
                 start.UseShellExecute = false;
                 start.RedirectStandardOutput = true;
+                start.RedirectStandardError = true;
                 start.CreateNoWindow = true;
 
-                using (Process process = Process.Start(start))
+                using (Process process = new Process { StartInfo = start })
                 {
-                    using (StreamReader reader = process.StandardOutput)
-                    {
-                        string result = reader.ReadToEnd();
-                        Console.WriteLine(result);
+                    //Avvio il processo
+                    process.Start();
 
-                        List<string> listaCapiVestiario = result.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                        AggiungiRisultatiAlTableLayoutPanel(listaCapiVestiario, tableLayoutPanel2);
+                    //Leggo l'output standard dello script Python
+                    string output = process.StandardOutput.ReadToEnd();
+                    string error = process.StandardError.ReadToEnd();
+
+                    //Attendo che lo script Python termini
+                    process.WaitForExit();
+
+                    //controllo se ci sono errori durante l'esecuzione dello script ed eventualmente stampo un messaggio
+                    if (!string.IsNullOrEmpty(error))
+                    {
+                        Console.WriteLine($"Errore: {error}");
+                    }
+                    else
+                    {
+                        // Output ottenuto dallo script Python
+                        string[] righeOutput = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                        AggiungiRisultatiAlTableLayoutPanel(righeOutput.ToList(), tableLayoutPanel2);
                     }
                 }
             }
