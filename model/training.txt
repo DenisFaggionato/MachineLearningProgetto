@@ -1,0 +1,64 @@
+
+dataset = ImageFolder(root="C:\\Users\\1\\Desktop\\nuovodataset", transform=transform)
+
+#divido il dataset in train e test
+train_size = int(0.8 * len(dataset))
+test_size = len(dataset) - train_size
+train_dataset, test_dataset = torch.utils.data.random_split(dataset, [train_size, test_size])
+
+
+batch_size = 16
+num_epochs = 10
+
+#Creiamo i DataLoader per il set di addestramento e test
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+
+#Addestramento del modello
+for epoch in range(num_epochs):
+    model.train()  # Imposta il modello in modalità di addestramento
+
+    for images, labels in train_loader:
+        #Azzera i gradienti
+        optimizer.zero_grad()
+
+        #Passa i dati attraverso il modello
+        outputs = model(images)
+
+        #Calcola la loss
+        loss = criterion(outputs, labels)
+
+        #Esegui la retropropagazione e l'ottimizzazione
+        loss.backward()
+        optimizer.step()
+
+    #Valutazione del modello sul set di test
+    model.eval()  # Imposta il modello in modalità di valutazione
+    correct = 0
+    total = 0
+    predicted_labels = []
+
+    with torch.no_grad():
+        for images, labels in test_loader:
+            outputs = model(images)
+            _, predicted = torch.max(outputs.data, 1)
+
+            predicted_labels.extend([model.class_mapping[label.item()] for label in predicted])
+
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    accuracy = correct / total
+    print(f'Epoch {epoch+1}/{num_epochs}, Loss: {loss.item():.4f}, Accuracy on test set: {accuracy:.2%}')
+    print("Predicted labels:", predicted_labels)
+
+print("Addestramento completato.")
+
+percorso_salvataggio = 'C:\\Users\\1\\Desktop\\macchina\\test'
+
+#Crea la directory se non esiste già
+if not os.path.exists(percorso_salvataggio):
+    os.makedirs(percorso_salvataggio)
+
+#Salva i pesi del modello
+torch.save(model.state_dict(), os.path.join(percorso_salvataggio, 'pesi_modello.pth'))
