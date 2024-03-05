@@ -5,7 +5,7 @@ namespace MacchinaImparante
 {
     public partial class Form1 : Form
     {
-        private string imagePath;
+        private string imagePath = @"";
 
         public Form1()
         {
@@ -27,8 +27,6 @@ namespace MacchinaImparante
                     Immagine.Image = Image.FromFile(imagePath);
                 }
             }
-
-            Console.WriteLine(imagePath);
         }
 
         private void Immagine_DragEnter(object sender, DragEventArgs e)
@@ -40,8 +38,7 @@ namespace MacchinaImparante
         {
             if (!string.IsNullOrEmpty(imagePath))
             {
-                Console.WriteLine(imagePath);
-                string pythonScriptPath = "C:\\Users\\1\\source\\repos\\MachineLearningProgetto\\ml.py";
+                string pythonScriptPath = "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\model\\model.py";
 
                 // Esegui lo script Python utilizzando subprocess
                 ProcessStartInfo start = new ProcessStartInfo();
@@ -67,32 +64,21 @@ namespace MacchinaImparante
                     //controllo se ci sono errori durante l'esecuzione dello script ed eventualmente stampo un messaggio
                     if (!string.IsNullOrEmpty(error))
                     {
-                        Console.WriteLine($"Errore: {error}");
+                        MessageBox.Show(error);
                     }
                     else
                     {
                         // Output ottenuto dallo script Python
-                        string[] righeOutput = output.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                        AggiungiRisultatiAlTableLayoutPanel(righeOutput.ToList(), tableLayoutPanel2);
+                        string[] results = output.Split(',');
+                        Output.Items.Add(results[0]);
+                        Output.Items.Add(results[1]);
+
                     }
                 }
             }
             else
             {
                 Console.WriteLine("Nessuna immagine selezionata.");
-            }
-        }
-
-        private void AggiungiRisultatiAlTableLayoutPanel(List<string> listaCapiVestiario, TableLayoutPanel t)
-        {
-
-            for (int i = 0; i < listaCapiVestiario.Count; i++)
-            {
-                Label label = new Label();
-                label.Text = listaCapiVestiario[i];
-                label.Dock = DockStyle.Fill;
-
-                t.Controls.Add(label, 0, i);
             }
         }
     }

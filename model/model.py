@@ -7,6 +7,13 @@ from torchvision import transforms
 from torchvision.datasets import ImageFolder
 import cv2
 from PIL import Image
+import sys
+
+# Recupera gli argomenti della riga di comando
+if len(sys.argv) > 1:
+    image_path = sys.argv[1]
+else:
+    print("Nessun percorso dell'immagine fornito.")
 
 class CNNModel(nn.Module):
     def __init__(self, num_classes):
@@ -65,7 +72,6 @@ transform = transforms.Compose([
 ])
 
 # Carica l'immagine con OpenCV
-image_path = "model\\test.jpg"
 image_opencv = cv2.imread(image_path)
 
 # Applica le trasformazioni a ciascuna regione
@@ -75,13 +81,13 @@ transform = transforms.Compose([
 ])
 
 # Processa la regione del torso
-region_torso = image_opencv[:700, :]
+region_torso = image_opencv[:800, :]
 image_torso = Image.fromarray(region_torso)
 image_torso = transform(image_torso)
-image_torso = image_torso.unsqueeze(0)  # Aggiungi una dimensione batch
+image_torso = image_torso.unsqueeze(0)
 
 # Processa la regione delle gambe
-region_gambe = image_opencv[400:, :]
+region_gambe = image_opencv[600:, :]
 image_gambe = Image.fromarray(region_gambe)
 image_gambe = transform(image_gambe)
 image_gambe = image_gambe.unsqueeze(0)
@@ -106,14 +112,12 @@ _, predicted_index_torso = torch.max(outputs_torso, 1)
 _, predicted_index_gambe = torch.max(outputs_gambe, 1)
 
 # Mappa gli indici alle classi
-class_mapping_torso = {0: 'maglietta', 1: 'camicia', 2: 'felpa', 3: 'abito', 4: 'pantaloni', 5: 'gonna', 6: 'shorts'}
-class_mapping_gambe = {0: 'maglietta', 1: 'camicia', 2: 'felpa', 3: 'abito', 4: 'pantaloni', 5: 'gonna', 6: 'shorts'}
+class_mapping_torso = {0: 'maglietta', 1: 'camicia', 2: 'felpa', 3: 'abito', 4: 'pantaloni', 5: 'felpa', 6: 'shorts'}
+class_mapping_gambe = {0: 'maglietta', 1: 'camicia', 2: 'felpa', 3: 'abito', 4: 'pantaloni', 5: 'pantaloni', 6: 'shorts'}
 
 predicted_class_torso = class_mapping_torso[predicted_index_torso.item()]
 predicted_class_gambe = class_mapping_gambe[predicted_index_gambe.item()]
 
 # Stampa le classi predette
-print(f"Capo di abbigliamento sul torso: {predicted_class_torso}")
-print(f"Capo di abbigliamento sulle gambe: {predicted_class_gambe}")
-
-cv2.waitKey(0)
+print(f"{predicted_class_torso},")
+print(f"{predicted_class_gambe}")
