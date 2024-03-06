@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\MacchinaImparante.csproj": {}
+    "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto2\\MacchinaImparante.csproj": {}
   },
   "projects": {
-    "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\MacchinaImparante.csproj": {
+    "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto2\\MacchinaImparante.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\MacchinaImparante.csproj",
+        "projectUniqueName": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto2\\MacchinaImparante.csproj",
         "projectName": "MacchinaImparante",
-        "projectPath": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\MacchinaImparante.csproj",
+        "projectPath": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto2\\MacchinaImparante.csproj",
         "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\obj\\",
+        "outputPath": "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config",

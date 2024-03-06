@@ -38,7 +38,7 @@ namespace MacchinaImparante
         {
             if (!string.IsNullOrEmpty(imagePath))
             {
-                string pythonScriptPath = "C:\\Users\\1\\Source\\Repos\\MachineLearningProgetto1\\model\\model.py";
+                string pythonScriptPath = @"..\..\..\model\model.py";
 
                 // Esegui lo script Python utilizzando subprocess
                 ProcessStartInfo start = new ProcessStartInfo();

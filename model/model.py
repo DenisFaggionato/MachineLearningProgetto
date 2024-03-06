@@ -94,12 +94,12 @@ image_gambe = image_gambe.unsqueeze(0)
 
 # Carica il modello per il riconoscimento del torso
 model_torso = CNNModel(7)
-model_torso.load_state_dict(torch.load("C:\\Users\\1\\Desktop\\macchina\\test\\pesi_modello.pth"))
+model_torso.load_state_dict(torch.load("..\\..\\..\\model\\pesi_modello.pth"))
 model_torso.eval()
 
 # Carica il modello per il riconoscimento delle gambe
 model_gambe = CNNModel(7)
-model_gambe.load_state_dict(torch.load("C:\\Users\\1\\Desktop\\macchina\\test\\pesi_modello.pth"))
+model_gambe.load_state_dict(torch.load("..\\..\\..\\model\\pesi_modello.pth"))
 model_gambe.eval()
 
 # Passa le immagini attraverso i modelli
